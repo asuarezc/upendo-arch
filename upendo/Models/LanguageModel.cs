@@ -1,5 +1,4 @@
-﻿using System;
-using upendo.CrossCutting.Localization;
+﻿using upendo.CrossCutting.Localization;
 
 namespace upendo.Models
 {

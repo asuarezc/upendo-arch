@@ -12,9 +12,5 @@
                 NotifyPropertyChanged();
             }
         }
-
-        public CameraAndGalleryModel()
-        {
-        }
     }
 }

@@ -171,31 +171,30 @@ namespace upendo.ViewModels
 
             try
             {
-                using (BusyLifeTimeScope busyLifeTimeScope = new(this))
+                using BusyLifeTimeScope busyLifeTimeScope = new(this);
+
+                timeoutTask = Task.Run(async () =>
                 {
-                    timeoutTask = Task.Run(async () =>
-                    {
-                        await Task.Delay(timeout);
-                        cancellationTokenSource.Cancel();
-                    });
+                    await Task.Delay(timeout);
+                    cancellationTokenSource.Cancel();
+                });
 
-                    jobTask = Task.Run(
-                        () => job(), cancellationToken
-                    );
+                jobTask = Task.Run(
+                    () => job(), cancellationToken
+                );
 
-                    firstCompletedTask = await Task.WhenAny(timeoutTask, jobTask);
+                firstCompletedTask = await Task.WhenAny(timeoutTask, jobTask);
 
-                    if (ReferenceEquals(timeoutTask, firstCompletedTask))
-                    {
-                        onTimeout.Invoke();
-                        return;
-                    }
-
-                    if (jobTask.Exception != null)
-                        onError.Invoke(jobTask.Exception);
-                    else
-                        onSuccess?.Invoke();
+                if (ReferenceEquals(timeoutTask, firstCompletedTask))
+                {
+                    onTimeout.Invoke();
+                    return;
                 }
+
+                if (jobTask.Exception != null)
+                    onError.Invoke(jobTask.Exception);
+                else
+                    onSuccess?.Invoke();
             }
             catch (Exception ex)
             {
@@ -250,35 +249,34 @@ namespace upendo.ViewModels
 
             try
             {
-                using (BusyLifeTimeScope busyLifeTimeScope = new(this))
+                using BusyLifeTimeScope busyLifeTimeScope = new(this);
+
+                timeoutTask = Task.Run(async () =>
                 {
-                    timeoutTask = Task.Run(async () =>
+                    await Task.Delay(timeout);
+                    cancellationTokenSource.Cancel();
+                });
+
+                jobTask = Task.Run(
+                    () =>
                     {
-                        await Task.Delay(timeout);
-                        cancellationTokenSource.Cancel();
-                    });
+                        using IResolverContext scope = Container.OpenScope();
+                        job(scope);
+                    }, cancellationToken
+                );
 
-                    jobTask = Task.Run(
-                        () =>
-                        {
-                            using IResolverContext scope = Container.OpenScope();
-                            job(scope);
-                        }, cancellationToken
-                    );
+                firstCompletedTask = await Task.WhenAny(timeoutTask, jobTask);
 
-                    firstCompletedTask = await Task.WhenAny(timeoutTask, jobTask);
-
-                    if (ReferenceEquals(timeoutTask, firstCompletedTask))
-                    {
-                        onTimeout.Invoke();
-                        return;
-                    }
-
-                    if (jobTask.Exception != null)
-                        onError.Invoke(jobTask.Exception);
-                    else
-                        onSuccess?.Invoke();
+                if (ReferenceEquals(timeoutTask, firstCompletedTask))
+                {
+                    onTimeout.Invoke();
+                    return;
                 }
+
+                if (jobTask.Exception != null)
+                    onError.Invoke(jobTask.Exception);
+                else
+                    onSuccess?.Invoke();
             }
             catch (Exception ex)
             {
@@ -335,32 +333,31 @@ namespace upendo.ViewModels
 
             try
             {
-                using (BusyLifeTimeScope busyLifeTimeScope = new(this))
+                using BusyLifeTimeScope busyLifeTimeScope = new(this);
+
+                timeoutTask = Task.Run(async () =>
                 {
-                    timeoutTask = Task.Run(async () =>
-                    {
-                        await Task.Delay(timeout);
-                        cancellationTokenSource.Cancel();
-                    });
+                    await Task.Delay(timeout);
+                    cancellationTokenSource.Cancel();
+                });
 
-                    jobTask = Task.Run(
-                        () => result = job.Invoke(),
-                        cancellationToken
-                    );
+                jobTask = Task.Run(
+                    () => result = job.Invoke(),
+                    cancellationToken
+                );
 
-                    firstCompletedTask = await Task.WhenAny(timeoutTask, jobTask);
+                firstCompletedTask = await Task.WhenAny(timeoutTask, jobTask);
 
-                    if (ReferenceEquals(timeoutTask, firstCompletedTask))
-                    {
-                        onTimeout.Invoke();
-                        return;
-                    }
-
-                    if (jobTask.Exception != null)
-                        onError.Invoke(jobTask.Exception);
-                    else
-                        onSuccess?.Invoke(result);
+                if (ReferenceEquals(timeoutTask, firstCompletedTask))
+                {
+                    onTimeout.Invoke();
+                    return;
                 }
+
+                if (jobTask.Exception != null)
+                    onError.Invoke(jobTask.Exception);
+                else
+                    onSuccess?.Invoke(result);
             }
             catch (Exception ex)
             {
@@ -417,35 +414,34 @@ namespace upendo.ViewModels
 
             try
             {
-                using (BusyLifeTimeScope busyLifeTimeScope = new(this))
+                using BusyLifeTimeScope busyLifeTimeScope = new(this);
+
+                timeoutTask = Task.Run(async () =>
                 {
-                    timeoutTask = Task.Run(async () =>
+                    await Task.Delay(timeout);
+                    cancellationTokenSource.Cancel();
+                });
+
+                jobTask = Task.Run(
+                    () =>
                     {
-                        await Task.Delay(timeout);
-                        cancellationTokenSource.Cancel();
-                    });
+                        using IResolverContext scope = Container.OpenScope();
+                        result = job(scope);
+                    }, cancellationToken
+                );
 
-                    jobTask = Task.Run(
-                        () =>
-                        {
-                            using IResolverContext scope = Container.OpenScope();
-                            result = job(scope);
-                        }, cancellationToken
-                    );
+                firstCompletedTask = await Task.WhenAny(timeoutTask, jobTask);
 
-                    firstCompletedTask = await Task.WhenAny(timeoutTask, jobTask);
-
-                    if (ReferenceEquals(timeoutTask, firstCompletedTask))
-                    {
-                        onTimeout.Invoke();
-                        return;
-                    }
-
-                    if (jobTask.Exception != null)
-                        onError.Invoke(jobTask.Exception);
-                    else
-                        onSuccess?.Invoke(result);
+                if (ReferenceEquals(timeoutTask, firstCompletedTask))
+                {
+                    onTimeout.Invoke();
+                    return;
                 }
+
+                if (jobTask.Exception != null)
+                    onError.Invoke(jobTask.Exception);
+                else
+                    onSuccess?.Invoke(result);
             }
             catch (Exception ex)
             {
@@ -502,35 +498,34 @@ namespace upendo.ViewModels
 
             try
             {
-                using (BusyLifeTimeScope busyLifeTimeScope = new(this))
+                using BusyLifeTimeScope busyLifeTimeScope = new(this);
+
+                timeoutTask = Task.Run(async () =>
                 {
-                    timeoutTask = Task.Run(async () =>
+                    await Task.Delay(timeout);
+                    cancellationTokenSource.Cancel();
+                });
+
+                jobTask = Task.Run(
+                    async () =>
                     {
-                        await Task.Delay(timeout);
-                        cancellationTokenSource.Cancel();
-                    });
+                        using IResolverContext scope = Container.OpenScope();
+                        result = await job(scope);
+                    }, cancellationToken
+                );
 
-                    jobTask = Task.Run(
-                        async () =>
-                        {
-                            using IResolverContext scope = Container.OpenScope();
-                            result = await job(scope);
-                        }, cancellationToken
-                    );
+                firstCompletedTask = await Task.WhenAny(timeoutTask, jobTask);
 
-                    firstCompletedTask = await Task.WhenAny(timeoutTask, jobTask);
-
-                    if (ReferenceEquals(timeoutTask, firstCompletedTask))
-                    {
-                        onTimeout.Invoke();
-                        return;
-                    }
-
-                    if (jobTask.Exception != null)
-                        onError.Invoke(jobTask.Exception);
-                    else
-                        onSuccess?.Invoke(result);
+                if (ReferenceEquals(timeoutTask, firstCompletedTask))
+                {
+                    onTimeout.Invoke();
+                    return;
                 }
+
+                if (jobTask.Exception != null)
+                    onError.Invoke(jobTask.Exception);
+                else
+                    onSuccess?.Invoke(result);
             }
             catch (Exception ex)
             {
@@ -579,21 +574,20 @@ namespace upendo.ViewModels
 
             try
             {
-                using (BusyLifeTimeScope busyLifeTimeScope = new(this))
-                {
-                    jobTask = Task.Run(
-                        () => job(token), token
-                    );
+                using BusyLifeTimeScope busyLifeTimeScope = new(this);
 
-                    await jobTask;
+                jobTask = Task.Run(
+                    () => job(token), token
+                );
 
-                    if (jobTask.Exception != null)
-                        onError.Invoke(jobTask.Exception);
-                    else if (token.IsCancellationRequested)
-                        onCancelled.Invoke();
-                    else
-                        onSuccess?.Invoke();
-                }
+                await jobTask;
+
+                if (jobTask.Exception != null)
+                    onError.Invoke(jobTask.Exception);
+                else if (token.IsCancellationRequested)
+                    onCancelled.Invoke();
+                else
+                    onSuccess?.Invoke();
             }
             catch (Exception ex)
             {
@@ -638,21 +632,20 @@ namespace upendo.ViewModels
 
             try
             {
-                using (BusyLifeTimeScope busyLifeTimeScope = new(this))
-                {
-                    jobTask = Task.Run(
-                        () => job(token), token
-                    );
+                using BusyLifeTimeScope busyLifeTimeScope = new(this);
 
-                    await jobTask;
+                jobTask = Task.Run(
+                    () => job(token), token
+                );
 
-                    if (jobTask.Exception != null)
-                        onError.Invoke(jobTask.Exception);
-                    else if (token.IsCancellationRequested)
-                        onCancelled.Invoke();
-                    else
-                        onSuccess?.Invoke();
-                }
+                await jobTask;
+
+                if (jobTask.Exception != null)
+                    onError.Invoke(jobTask.Exception);
+                else if (token.IsCancellationRequested)
+                    onCancelled.Invoke();
+                else
+                    onSuccess?.Invoke();
             }
             catch (Exception ex)
             {
@@ -697,25 +690,24 @@ namespace upendo.ViewModels
 
             try
             {
-                using (BusyLifeTimeScope busyLifeTimeScope = new(this))
-                {
-                    jobTask = Task.Run(
-                        () =>
-                        {
-                            using IResolverContext scope = Container.OpenScope();
-                            job(scope, token);
-                        }, token
-                    );
+                using BusyLifeTimeScope busyLifeTimeScope = new(this);
 
-                    await jobTask;
+                jobTask = Task.Run(
+                    () =>
+                    {
+                        using IResolverContext scope = Container.OpenScope();
+                        job(scope, token);
+                    }, token
+                );
 
-                    if (jobTask.Exception != null)
-                        onError.Invoke(jobTask.Exception);
-                    else if (token.IsCancellationRequested)
-                        onCancelled.Invoke();
-                    else
-                        onSuccess?.Invoke();
-                }
+                await jobTask;
+
+                if (jobTask.Exception != null)
+                    onError.Invoke(jobTask.Exception);
+                else if (token.IsCancellationRequested)
+                    onCancelled.Invoke();
+                else
+                    onSuccess?.Invoke();
             }
             catch (Exception ex)
             {

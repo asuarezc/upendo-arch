@@ -29,11 +29,6 @@ namespace upendo.ViewModels
 
         public override async Task<LocalCachePageModel> GetInitialModelAsync()
         {
-            return await GetInitialModelInternalAsync();
-        }
-
-        private async Task<LocalCachePageModel> GetInitialModelInternalAsync()
-        {
             LocalCachePageModel model = new() { CurrentExpirationSeconds = 5 };
 
             await RunUnitOfWorkAsync(

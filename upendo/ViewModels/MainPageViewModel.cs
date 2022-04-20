@@ -7,10 +7,8 @@ using upendo.CrossCutting.Interfaces.Logic;
 using upendo.Models;
 using System.Linq;
 using Xamarin.Forms;
-using System;
 using upendo.ContentPages;
 using upendo.Managers;
-using upendo.Helpers;
 using upendo.CrossCutting.Localization;
 using upendo.CrossCutting.Entities.Enums;
 using DryIoc;
@@ -22,23 +20,6 @@ namespace upendo.ViewModels
         public override string Title => GetResource(StringKey.app_name);
 
         public override async Task<MainPageModel> GetInitialModelAsync()
-        {
-            MainPageModel model = null;
-
-            try
-            {
-                model = await GetInitialModelInternalAsync();
-            }
-            catch (Exception ex)
-            {
-                ShowStatusMessage(GetResource(StringKey.global_error_loading_menu));
-                ex.Log();
-            }
-
-            return model;
-        }
-
-        private async Task<MainPageModel> GetInitialModelInternalAsync()
         {
             MainPageModel model = new();
 

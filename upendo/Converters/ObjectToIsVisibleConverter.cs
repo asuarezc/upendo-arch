@@ -24,14 +24,7 @@ namespace upendo.Converters
                 return ((Array)value).LongLength > 0;
 
             if (value is IEnumerable enumerable)
-            {
-                //True if not empty
-                //This is faster than "enumerable.GetEnumerator().MoveNext()"
-                foreach (object _ in enumerable)
-                    return true;
-
-                return false;
-            }
+                return enumerable.GetEnumerator().MoveNext();
 
             return true;
         }

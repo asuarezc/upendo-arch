@@ -19,12 +19,6 @@ namespace upendo.Managers
 {
     public sealed class DependencyServiceManager
     {
-        private enum Scopes
-        {
-            Singleton,
-            Logic,
-        }
-
         private static readonly Lazy<DependencyServiceManager> lazyInstance = new(
             () => new DependencyServiceManager(), LazyThreadSafetyMode.PublicationOnly
         );
