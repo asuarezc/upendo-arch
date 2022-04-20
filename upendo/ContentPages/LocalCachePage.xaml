@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<pages:LocalCachePageXaml
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:localization="clr-namespace:upendo.Localization"
+    xmlns:pages="clr-namespace:upendo.ContentPages"
+    xmlns:views="clr-namespace:upendo.ContentViews"
+    x:Class="upendo.ContentPages.LocalCachePage">
+
+    <pages:LocalCachePageXaml.Content>
+        <Grid
+            HorizontalOptions="FillAndExpand"
+            VerticalOptions="FillAndExpand"
+            Style="{StaticResource MainContentBackgroundStyle}">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <views:HeaderView
+                Grid.Row="0"
+                HorizontalOptions="FillAndExpand"
+                TitleText="{Binding Title}"
+                IsBackButtonVisible="True"
+                IsBackButtonEnabled="True"
+                BackCommand="{Binding BackCommand}"/>
+
+            <StackLayout
+                Grid.Row="1"
+                Orientation="Vertical"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand"
+                Padding="16"
+                Spacing="16">
+
+                <ListView
+                    ItemsSource="{Binding Model.Strings}"
+                    SelectionMode="None"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="StartAndExpand"
+                    RowHeight="20">
+
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Label Text="{Binding .}"/>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+                <Entry
+                    Keyboard="Text"
+                    Placeholder="{localization:Translate global_entry_placeholder}"
+                    MaxLength="30"
+                    ReturnType="Done"
+                    Text="{Binding Model.NewString}"/>
+
+                <views:AmountSlider
+                    FieldDescription="{localization:Translate global_expiration}"
+                    UnitDescription="{localization:Translate unit_seconds}"
+                    HorizontalOptions="FillAndExpand"
+                    Stepped="True"
+                    MinValue="5"
+                    MaxValue="30"
+                    CurrentValue="{Binding Model.CurrentExpirationSeconds}"/>
+
+                <Button
+                    Style="{StaticResource ActionButtonStyle}"
+                    Text="{localization:Translate global_add}"
+                    IsEnabled="{Binding IsNotBusy}"
+                    Command="{Binding AddNewStringCommand}"/>
+
+                <Button
+                    Style="{StaticResource ActionButtonStyle}"
+                    Text="{localization:Translate global_refresh}"
+                    IsEnabled="{Binding IsNotBusy}"
+                    Command="{Binding RefreshCommand}"/>
+            </StackLayout>
+
+            <views:FooterView
+                Grid.Row="2"
+                HorizontalOptions="FillAndExpand"
+                IsVisibleAndRunning="{Binding IsBusy}"/>
+        </Grid>
+    </pages:LocalCachePageXaml.Content>
+</pages:LocalCachePageXaml>

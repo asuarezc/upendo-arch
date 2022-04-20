@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ResourceDictionary
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="upendo.Themes.Light">
+    <!-- Primary: For bars and menus -->
+    <Color x:Key="PrimaryColorDark">#2c001c</Color>
+    <Color x:Key="PrimaryColor">#561643</Color>
+    <Color x:Key="PrimaryColorLight">#85426e</Color>
+
+    <!-- Secondary: For UI inputs -->
+    <Color x:Key="SecondaryColorDark">#142a00</Color>
+    <Color x:Key="SecondaryColor">#345400</Color>
+    <Color x:Key="SecondaryColorLight">#618130</Color>
+
+    <!-- Success -->
+    <Color x:Key="SuccessColorDark">#002f6c</Color>
+    <Color x:Key="SuccessColor">#01579b</Color>
+    <Color x:Key="SuccessColorLight">#4f83cc</Color>
+
+    <!-- Warning -->
+    <Color x:Key="WarningColorDark">#703c00</Color>
+    <Color x:Key="WarningColor">#a36700</Color>
+    <Color x:Key="WarningColorLight">#d99539</Color>
+
+    <!-- Error -->
+    <Color x:Key="ErrorColorDark">#870000</Color>
+    <Color x:Key="ErrorColor">#bf360c</Color>
+    <Color x:Key="ErrorColorLight">#f9683a</Color>
+
+    <!-- Gray scale -->
+    <Color x:Key="Black">#000000</Color>
+    <Color x:Key="DarkestGray">#333333</Color>
+    <Color x:Key="DarkGray">#666666</Color>
+    <Color x:Key="Gray">#999999</Color>
+    <Color x:Key="LightGray">#CCCCCC</Color>
+    <Color x:Key="LightestGray">#EEEEEE</Color>
+    <Color x:Key="White">#FFFFFF</Color>
+
+    <!-- Text color -->
+    <Color x:Key="TextOverDarkColor">#EEEEEE</Color>
+    <Color x:Key="TextOverMediumColor">#EFEFEF</Color>
+    <Color x:Key="TextOverLightColor">#030303</Color>
+
+    <!-- Main content background -->
+    <Color x:Key="MainContentBackgroundColor">#EFEFEF</Color>
+</ResourceDictionary>

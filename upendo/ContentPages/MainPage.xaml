@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<pages:MainPageXaml
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:pages="clr-namespace:upendo.ContentPages"
+    xmlns:views="clr-namespace:upendo.ContentViews"
+    xmlns:viewModels="clr-namespace:upendo.ViewModels"
+    x:Class="upendo.ContentPages.MainPage">
+
+    <pages:MainPageXaml.Content>
+        <Grid
+            HorizontalOptions="FillAndExpand"
+            VerticalOptions="FillAndExpand"
+            Style="{StaticResource MainContentBackgroundStyle}">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <views:HeaderView
+                Grid.Row="0"
+                HorizontalOptions="FillAndExpand"
+                TitleText="{Binding Title}"/>
+
+            <ScrollView
+                Grid.Row="1"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand">
+
+                <StackLayout
+                    x:Name="menuOptionsStackLayout"
+                    Orientation="Vertical"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="CenterAndExpand"
+                    Padding="16"
+                    Spacing="16"
+                    BindableLayout.ItemsSource="{Binding Model.MenuOptions}">
+
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate>
+                            <views:MenuOption
+                                Description="{Binding Description}"
+                                TopBarBackgroundColor="{Binding TopBarBackgroundColor}"
+                                OptionBackgroundColor="{Binding OptionBackgroundColor}"
+                                OptionImageSource="{Binding OptionImageSource}"
+                                GoImageSource="{Binding GoImageSource}"
+                                TapCommand="{Binding Command}"
+                                UseDarkTheme="{Binding Source={RelativeSource AncestorType={x:Type viewModels:MainPageViewModel}}, Path=UsingDarkTheme}"/>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </StackLayout>
+            </ScrollView>
+
+            <views:FooterView
+                Grid.Row="2"
+                HorizontalOptions="FillAndExpand"
+                IsVisibleAndRunning="{Binding IsBusy}"/>
+        </Grid>
+    </pages:MainPageXaml.Content>
+</pages:MainPageXaml>

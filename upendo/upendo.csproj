@@ -1,0 +1,145 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebugType>portable</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2401" />
+    <PackageReference Include="Microsoft.AppCenter" Version="4.5.0" />
+    <PackageReference Include="Microsoft.AppCenter.Analytics" Version="4.5.0" />
+    <PackageReference Include="Microsoft.AppCenter.Crashes" Version="4.5.0" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.7.2" />
+    <PackageReference Include="Xamarin.CommunityToolkit" Version="2.0.1" />
+    <PackageReference Include="DryIoc.dll" Version="5.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Models\" />
+    <None Remove="ViewModels\" />
+    <None Remove="ContentPages\" />
+    <None Remove="Helpers\" />
+    <None Remove="Managers\" />
+    <None Remove="Autofac" />
+    <None Remove="ContentViews\" />
+    <None Remove="Themes\" />
+    <None Remove="Xamarin.Essentials" />
+    <None Remove="Microsoft.AppCenter" />
+    <None Remove="Microsoft.AppCenter.Analytics" />
+    <None Remove="Microsoft.AppCenter.Crashes" />
+    <None Remove="Converters\" />
+    <None Remove="Xamarin.CommunityToolkit" />
+    <None Remove="Localization\" />
+    <None Remove="TinyIoC" />
+    <None Remove="DryIoc" />
+    <None Remove="DryIoc.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models\" />
+    <Folder Include="ViewModels\" />
+    <Folder Include="ContentPages\" />
+    <Folder Include="Helpers\" />
+    <Folder Include="Managers\" />
+    <Folder Include="ContentViews\" />
+    <Folder Include="Themes\" />
+    <Folder Include="Converters\" />
+    <Folder Include="Localization\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\upendo.Services\upendo.Services.csproj" />
+    <ProjectReference Include="..\upendo.CrossCutting\upendo.CrossCutting.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="Resources\AppResourceses.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>AppResources.es.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\AppResourcesde.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>AppResources.de.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\AppResourcesfr.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>AppResources.fr.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\AppResourcesja.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>AppResources.ja.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\AppResourcesptpt.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>AppResources.pt.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\AppResourcesru.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>AppResources.ru.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\AppResourcesit.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>AppResources.it.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\AppResourcesnl.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>AppResources.nl.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\AppResourcespl.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>AppResources.pl.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\AppResourcesko.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>AppResources.ko.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\AppResourceszhcn.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>AppResources.zh.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Resources\AppResourceses.Designer.cs">
+      <DependentUpon>AppResources.es.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\AppResourcesde.Designer.cs">
+      <DependentUpon>AppResources.de.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\AppResourcesfr.Designer.cs">
+      <DependentUpon>AppResources.fr.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\AppResourcesja.Designer.cs">
+      <DependentUpon>AppResources.ja.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\AppResourcesptpt.Designer.cs">
+      <DependentUpon>AppResources.pt.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\AppResources.pt-PT.Designer.cs">
+      <DependentUpon>AppResources.pt.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\AppResourcesru.Designer.cs">
+      <DependentUpon>AppResources.ru.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\AppResourcesit.Designer.cs">
+      <DependentUpon>AppResources.it.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\AppResourcesnl.Designer.cs">
+      <DependentUpon>AppResources.nl.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\AppResourcespl.Designer.cs">
+      <DependentUpon>AppResources.pl.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\AppResourcesko.Designer.cs">
+      <DependentUpon>AppResources.ko.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\AppResources.zh-CN.Designer.cs">
+      <DependentUpon>AppResources.zh.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+</Project>

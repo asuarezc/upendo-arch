@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="upendo.ContentViews.MenuOption">
+    <ContentView.Content>
+        <Grid
+            x:Name="mainLayout"
+            HorizontalOptions="FillAndExpand"
+            HeightRequest="54"
+            Style="{StaticResource MenuOptionFrameStyle}">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="6"/>
+                <RowDefinition Height="48"/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="48"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="32"/>
+            </Grid.ColumnDefinitions>
+
+            <BoxView
+                x:Name="topBarBoxView"
+                Grid.Row="0"
+                Grid.ColumnSpan="3"
+                HorizontalOptions="FillAndExpand"/>
+
+            <StackLayout
+                x:Name="optionStackLayout"
+                Grid.Row="1"
+                Grid.Column="0"
+                Margin="0,-6,0,6"
+                Padding="2">
+
+                <Image
+                    x:Name="optionImage"
+                    HorizontalOptions="CenterAndExpand"
+                    VerticalOptions="CenterAndExpand"/>
+            </StackLayout>
+
+            <Label
+                x:Name="descriptionLabel"
+                Grid.Row="1"
+                Grid.Column="1"
+                Margin="0,-6,0,6"
+                Style="{StaticResource MenuOptionLabelStyle}"
+                HorizontalOptions="StartAndExpand"
+                HorizontalTextAlignment="Start"
+                VerticalOptions="CenterAndExpand"
+                VerticalTextAlignment="Center"/>
+
+            <StackLayout
+                Grid.Row="1"
+                Grid.Column="2"
+                Margin="0,-6,0,6"
+                Padding="2">
+
+                <Image
+                    x:Name="goImage"
+                    HorizontalOptions="CenterAndExpand"
+                    VerticalOptions="CenterAndExpand"/>
+            </StackLayout>
+        </Grid>
+    </ContentView.Content>
+</ContentView>

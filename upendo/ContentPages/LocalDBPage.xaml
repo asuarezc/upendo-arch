@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<pages:LocalDBPageXaml
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+    xmlns:localization="clr-namespace:upendo.Localization"
+    xmlns:pages="clr-namespace:upendo.ContentPages"
+    xmlns:views="clr-namespace:upendo.ContentViews"
+    x:Class="upendo.ContentPages.LocalDBPage">
+    <pages:LocalDBPageXaml.Content>
+        <Grid
+            HorizontalOptions="FillAndExpand"
+            VerticalOptions="FillAndExpand"
+            Style="{StaticResource MainContentBackgroundStyle}">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <views:HeaderView
+                Grid.Row="0"
+                HorizontalOptions="FillAndExpand"
+                TitleText="{Binding Title}"
+                IsBackButtonVisible="True"
+                IsBackButtonEnabled="True"
+                BackCommand="{Binding BackCommand}"/>
+
+            <StackLayout
+                Grid.Row="1"
+                Orientation="Vertical"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand"
+                Padding="16"
+                Spacing="16">
+
+                <ListView
+                    ItemsSource="{Binding Model.Contacts}"
+                    IsPullToRefreshEnabled="False"
+                    SelectionMode="None"
+                    RowHeight="20"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="StartAndExpand">
+
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="2*"/>
+                                        <ColumnDefinition Width="1*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Label Grid.Column="0" Text="{Binding Name}"/>
+                                    <Label Grid.Column="1" Text="{Binding Phone}"/>
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+                <Entry
+                    x:Name="nameEntry"
+                    TabIndex="0"
+                    Keyboard="Text"
+                    Placeholder="{localization:Translate global_name}"
+                    MaxLength="30"
+                    ReturnType="Next"
+                    Text="{Binding Model.AddingContactName}"/>
+
+                <Entry
+                    x:Name="phoneEntry"
+                    TabIndex="1"
+                    Keyboard="Numeric"
+                    Placeholder="{localization:Translate global_phone}"
+                    ReturnType="Done"
+                    Text="{Binding Model.AddingContactPhone}">
+
+                    <Entry.Behaviors>
+                        <xct:MaskedBehavior Mask="XXX XX XX XX"/>
+                    </Entry.Behaviors>
+                </Entry>
+
+                <Button
+                    x:Name="addButton"
+                    Style="{StaticResource ActionButtonStyle}"
+                    Text="{localization:Translate global_add_contact}"
+                    IsEnabled="{Binding IsNotBusy}"
+                    Command="{Binding AddConctactCommand}"/>
+            </StackLayout>
+
+            <views:FooterView
+                Grid.Row="2"
+                HorizontalOptions="FillAndExpand"
+                IsVisibleAndRunning="{Binding IsBusy}"/>
+        </Grid>
+    </pages:LocalDBPageXaml.Content>
+</pages:LocalDBPageXaml>

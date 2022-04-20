@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<pages:LocationPageXaml
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:localization="clr-namespace:upendo.Localization"
+    xmlns:pages="clr-namespace:upendo.ContentPages"
+    xmlns:views="clr-namespace:upendo.ContentViews"
+    xmlns:converters="clr-namespace:upendo.Converters"
+    x:Class="upendo.ContentPages.LocationPage">
+
+    <pages:LocationPageXaml.Resources>
+        <ResourceDictionary>
+            <converters:ObjectToIsVisibleConverter x:Key="ObjectToIsVisibleConverter"/>
+        </ResourceDictionary>
+    </pages:LocationPageXaml.Resources>
+    
+    <pages:LocationPageXaml.Content>
+        <Grid
+            HorizontalOptions="FillAndExpand"
+            VerticalOptions="FillAndExpand"
+            Style="{StaticResource MainContentBackgroundStyle}">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <views:HeaderView
+                Grid.Row="0"
+                HorizontalOptions="FillAndExpand"
+                TitleText="{Binding Title}"
+                IsBackButtonVisible="True"
+                IsBackButtonEnabled="True"
+                BackCommand="{Binding BackCommand}"/>
+
+            <StackLayout
+                Grid.Row="1"
+                Orientation="Vertical"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand"
+                Padding="16"
+                Spacing="16"
+                Style="{StaticResource MainContentBackgroundStyle}">
+
+                <Label
+                    Text="{Binding Model.AddressLineOne}"
+                    IsVisible="{Binding Model.AddressLineOne, Converter={StaticResource ObjectToIsVisibleConverter}}"/>
+
+                <Label
+                    Text="{Binding Model.AddressLineTwo}"
+                    IsVisible="{Binding Model.AddressLineTwo, Converter={StaticResource ObjectToIsVisibleConverter}}"/>
+
+                <Button
+                    Style="{StaticResource ActionButtonStyle}"
+                    IsEnabled="{Binding IsNotBusy}"
+                    Command="{Binding GetLocationCommand}"
+                    Text="{localization:Translate global_where_am_i}"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="EndAndExpand"/>
+            </StackLayout>
+
+            <views:FooterView
+                Grid.Row="2"
+                HorizontalOptions="FillAndExpand"
+                IsVisibleAndRunning="{Binding IsBusy}"/>
+        </Grid>
+    </pages:LocationPageXaml.Content>
+</pages:LocationPageXaml>

@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+    x:Class="upendo.ContentViews.AmountSlider">
+    <ContentView.Content>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Label
+                x:Name="fieldDescriptionLabel"
+                Grid.Row="0"
+                Grid.Column="0"
+                Margin="15,0,0,0"
+                HorizontalOptions="Start"
+                HorizontalTextAlignment="Start"
+                FontAttributes="Bold"
+                TextColor="{DynamicResource SecondaryColorDark}"
+                MaxLines="1"
+                LineBreakMode="TailTruncation"/>
+
+            <Label
+                x:Name="currentValueLabel"
+                Grid.Row="0"
+                Grid.Column="1"
+                HorizontalOptions="Center"
+                HorizontalTextAlignment="Center"
+                TextColor="{DynamicResource SecondaryColor}"
+                MaxLines="1"
+                LineBreakMode="TailTruncation"/>
+
+            <Label
+                x:Name="unitDescriptionLabel"
+                Grid.Row="0"
+                Grid.Column="2"
+                Margin="0,0,15,0"
+                HorizontalOptions="End"
+                HorizontalTextAlignment="End"
+                TextColor="{DynamicResource SecondaryColor}"
+                MaxLines="1"
+                LineBreakMode="TailTruncation"/>
+
+            <Slider
+                x:Name="slider"
+                Grid.Row="1"
+                Grid.ColumnSpan="3"
+                HorizontalOptions="FillAndExpand"
+                Style="{StaticResource SliderStyle}">
+
+                <Slider.Effects>
+                    <xct:LifecycleEffect Loaded="LifecycleEffect_Loaded" Unloaded="LifecycleEffect_Unloaded"/>
+                </Slider.Effects>
+            </Slider>
+        </Grid>
+    </ContentView.Content>
+</ContentView>

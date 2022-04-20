@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<pages:SettingsPageXaml
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:localization="clr-namespace:upendo.Localization"
+    xmlns:pages="clr-namespace:upendo.ContentPages"
+    xmlns:views="clr-namespace:upendo.ContentViews"
+    x:Class="upendo.ContentPages.SettingsPage">
+    <pages:SettingsPageXaml.Content>
+        <Grid
+            HorizontalOptions="FillAndExpand"
+            VerticalOptions="FillAndExpand"
+            Style="{StaticResource MainContentBackgroundStyle}">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <views:HeaderView
+                Grid.Row="0"
+                IsBackButtonVisible="True"
+                IsBackButtonEnabled="True"
+                BackCommand="{Binding BackCommand}"
+                HorizontalOptions="FillAndExpand"
+                TitleText="{Binding Title}"/>
+
+            <Grid
+                Grid.Row="1"
+                Padding="16,0,16,8"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Label
+                    Grid.Column="0"
+                    Grid.Row="0"
+                    HorizontalOptions="StartAndExpand"
+                    HorizontalTextAlignment="Start"
+                    VerticalOptions="Center"
+                    VerticalTextAlignment="Center"
+                    Text="{localization:Translate global_language}"
+                    FontAttributes="Bold"/>
+
+                <Picker
+                    Grid.Column="1"
+                    Grid.Row="0"
+                    Title="{localization:Translate global_language}"
+                    ItemsSource="{Binding Model.Languages}"
+                    SelectedItem="{Binding Model.SelectedLanguage}"
+                    ItemDisplayBinding="{Binding Description}"
+                    VerticalOptions="Center"
+                    HorizontalOptions="FillAndExpand"/>
+
+                <Label
+                    Grid.Column="0"
+                    Grid.Row="1"
+                    HorizontalOptions="StartAndExpand"
+                    HorizontalTextAlignment="Start"
+                    VerticalOptions="Center"
+                    VerticalTextAlignment="Center"
+                    Text="{localization:Translate global_dark_theme}"
+                    FontAttributes="Bold"/>
+
+                <Switch
+                    Grid.Column="1"
+                    Grid.Row="1"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="Center"
+                    IsToggled="{Binding Model.IsDarkThemeEnabled}"
+                    Style="{StaticResource SwitchStyle}"/>
+            </Grid>
+
+            <views:FooterView
+                Grid.Row="2"
+                HorizontalOptions="FillAndExpand"
+                IsVisibleAndRunning="{Binding IsBusy}"/>
+        </Grid>
+    </pages:SettingsPageXaml.Content>
+</pages:SettingsPageXaml>

@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<pages:RestPageXaml
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:localization="clr-namespace:upendo.Localization"
+    xmlns:pages="clr-namespace:upendo.ContentPages"
+    xmlns:views="clr-namespace:upendo.ContentViews"
+    x:Class="upendo.ContentPages.RestPage">
+
+    <pages:RestPageXaml.Content>
+        <Grid
+            HorizontalOptions="FillAndExpand"
+            VerticalOptions="FillAndExpand"
+            Style="{StaticResource MainContentBackgroundStyle}">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <views:HeaderView
+                Grid.Row="0"
+                HorizontalOptions="FillAndExpand"
+                TitleText="{Binding Title}"
+                IsBackButtonVisible="True"
+                IsBackButtonEnabled="True"
+                BackCommand="{Binding BackCommand}"/>
+
+            <StackLayout
+                Grid.Row="1"
+                Orientation="Vertical"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand"
+                Padding="16"
+                Spacing="16"
+                BindableLayout.ItemsSource="{Binding Model.MenuOptions}"
+                Style="{StaticResource MainContentBackgroundStyle}">
+
+                <Button
+                    Style="{StaticResource ActionButtonStyle}"
+                    Text="{localization:Translate global_get_users}"
+                    HorizontalOptions="FillAndExpand"
+                    IsEnabled="{Binding IsNotBusy}"
+                    Command="{Binding GetUserCommand}"/>
+
+                <ListView
+                    ItemsSource="{Binding Model.Users}"
+                    IsPullToRefreshEnabled="False"
+                    SelectionMode="None"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="StartAndExpand"
+                    RowHeight="62">
+
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout
+                                    Orientation="Horizontal"
+                                    HorizontalOptions="FillAndExpand"
+                                    Spacing="8">
+
+                                    <Image
+                                        HeightRequest="60"
+                                        WidthRequest="60">
+                                        <Image.Source>
+                                            <UriImageSource Uri="{Binding AvatarUri}"/>
+                                        </Image.Source>
+                                    </Image>
+
+                                    <StackLayout
+                                        Orientation="Vertical"
+                                        Spacing="2"
+                                        HorizontalOptions="FillAndExpand">
+
+                                        <Label Text="{Binding FirstName}"/>
+                                        <Label Text="{Binding LastName}"/>
+                                        <Label Text="{Binding Email}"/>
+                                    </StackLayout>
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+                <Button
+                    Style="{StaticResource CancelButtonStyle}"
+                    Text="{localization:Translate global_delete_list}"
+                    HorizontalOptions="FillAndExpand"
+                    IsEnabled="{Binding IsNotBusy}"
+                    Command="{Binding ResetUserCommand}"/>
+            </StackLayout>
+
+            <views:FooterView
+                Grid.Row="2"
+                HorizontalOptions="FillAndExpand"
+                IsVisibleAndRunning="{Binding IsBusy}"/>
+        </Grid>
+    </pages:RestPageXaml.Content>
+</pages:RestPageXaml>

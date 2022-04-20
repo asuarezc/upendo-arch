@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<pages:RunBusyPageXaml
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:localization="clr-namespace:upendo.Localization"
+    xmlns:pages="clr-namespace:upendo.ContentPages"
+    xmlns:views="clr-namespace:upendo.ContentViews"
+    x:Class="upendo.ContentPages.RunBusyPage">
+
+    <pages:RunBusyPageXaml.Content>
+        <Grid
+            HorizontalOptions="FillAndExpand"
+            VerticalOptions="FillAndExpand"
+            Style="{StaticResource MainContentBackgroundStyle}">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <views:HeaderView
+                Grid.Row="0"
+                HorizontalOptions="FillAndExpand"
+                TitleText="{Binding Title}"
+                IsBackButtonVisible="True"
+                IsBackButtonEnabled="True"
+                BackCommand="{Binding BackCommand}"/>
+
+            <StackLayout
+                Grid.Row="1"
+                Orientation="Vertical"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand"
+                Padding="16"
+                Spacing="16"
+                BindableLayout.ItemsSource="{Binding Model.MenuOptions}"
+                Style="{StaticResource MainContentBackgroundStyle}">
+
+                <Button
+                    Style="{StaticResource ActionButtonStyle}"
+                    Text="{localization:Translate global_no_cancellable}"
+                    HorizontalOptions="FillAndExpand"
+                    IsEnabled="{Binding IsNotBusy}"
+                    Command="{Binding NotCancellableCommand}"/>
+
+                <StackLayout
+                    Orientation="Horizontal"
+                    HorizontalOptions="FillAndExpand"
+                    Spacing="16">
+
+                    <Button
+                        Style="{StaticResource ActionButtonStyle}"
+                        Text="{localization:Translate global_cancellable}"
+                        HorizontalOptions="FillAndExpand"
+                        IsEnabled="{Binding IsNotBusy}"
+                        Command="{Binding CancellableCommand}"/>
+
+                    <Button
+                        Style="{StaticResource CancelButtonStyle}"
+                        Text="{localization:Translate global_cancel}"
+                        HorizontalOptions="FillAndExpand"
+                        IsEnabled="{Binding CancellableCommandIsRunning}"
+                        Command="{Binding CancelCommand}"/>
+                </StackLayout>
+
+                <views:AmountSlider
+                    FieldDescription="{localization:Translate global_time_limit}"
+                    UnitDescription="{localization:Translate unit_seconds}"
+                    VerticalOptions="EndAndExpand"
+                    Stepped="True"
+                    MinValue="1"
+                    MaxValue="10"
+                    CurrentValue="{Binding Model.CurrentTimeoutSeconds}"/>
+            </StackLayout>
+
+            <views:FooterView
+                Grid.Row="2"
+                HorizontalOptions="FillAndExpand"
+                IsVisibleAndRunning="{Binding IsBusy}"/>
+        </Grid>
+    </pages:RunBusyPageXaml.Content>
+</pages:RunBusyPageXaml>
