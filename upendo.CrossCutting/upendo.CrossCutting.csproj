@@ -1,0 +1,54 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Remove="Interfaces\" />
+    <None Remove="Interfaces\Data\" />
+    <None Remove="LiteDB" />
+    <None Remove="Autofac" />
+    <None Remove="Interfaces\Data\LocalDB\" />
+    <None Remove="Interfaces\Data\LocalCache\" />
+    <None Remove="Interfaces\Data\Rest\" />
+    <None Remove="Interfaces\Data\Location\" />
+    <None Remove="Interfaces\Logic\" />
+    <None Remove="Entities\" />
+    <None Remove="Newtonsoft.Json" />
+    <None Remove="Xamarin.Essentials" />
+    <None Remove="Managers\" />
+    <None Remove="Localization\Strings.English" />
+    <None Remove="Localization\Strings.English.json" />
+    <None Remove="Entities\Enums\" />
+    <None Remove="Interfaces\Data\CameraAndDeviceGallery\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Interfaces\" />
+    <Folder Include="Interfaces\Data\" />
+    <Folder Include="Interfaces\Data\LocalDB\" />
+    <Folder Include="Interfaces\Data\LocalCache\" />
+    <Folder Include="Interfaces\Data\Rest\" />
+    <Folder Include="Interfaces\Data\Location\" />
+    <Folder Include="Interfaces\Logic\" />
+    <Folder Include="Entities\" />
+    <Folder Include="Localization\" />
+    <Folder Include="Entities\Enums\" />
+    <Folder Include="Interfaces\Data\CameraAndDeviceGallery\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="LiteDB" Version="5.0.11" />
+    <PackageReference Include="Autofac" Version="6.3.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.7.2" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="**/*" />
+  </ItemGroup>
+</Project>
