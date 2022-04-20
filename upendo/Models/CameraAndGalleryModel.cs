@@ -10,7 +10,13 @@
             {
                 mediaElement = value;
                 NotifyPropertyChanged();
+                NotifyPropertyChanged(() => IsPhoto);
+                NotifyPropertyChanged(() => IsVideo);
             }
         }
+
+        public bool IsPhoto => MediaElement != null && MediaElement.IsPhoto;
+
+        public bool IsVideo => MediaElement != null && MediaElement.IsVideo;
     }
 }
