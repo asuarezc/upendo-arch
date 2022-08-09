@@ -27,7 +27,7 @@ namespace upendo.Managers
 
         private DependencyServiceManager()
         {
-            Container = new Container(rules => rules.WithoutTrackingDisposableTransients());
+            Container = new Container();
             RegisterLogicTypes();
             RegisterDataTypes();
         }
@@ -41,18 +41,18 @@ namespace upendo.Managers
             Container.Register<IMemoryCacheFactory, MemoryCacheFactory>(Reuse.Singleton);
             Container.Register<IRestServiceFactory, RestServiceFactory>(Reuse.Singleton);
 
-            Container.Register<ILocationService, LocationService>();
-            Container.Register<IMediaService, MediaService>();
+            Container.Register<ILocationService, LocationService>(Reuse.Scoped);
+            Container.Register<IMediaService, MediaService>(Reuse.Scoped);
         }
 
         private void RegisterLogicTypes()
         {
-            Container.Register<IMainPageService, MainPageService>();
-            Container.Register<IRestPageService, RestPageService>();
-            Container.Register<IContactsService, ContactsService>();
-            Container.Register<ILocalCachePageService, LocalCachePageService>();
-            Container.Register<ILocationPageService, LocationPageService>();
-            Container.Register<ICameraAndGalleryPageService, CameraAndGalleryPageService>();
+            Container.Register<IMainPageService, MainPageService>(Reuse.Scoped);
+            Container.Register<IRestPageService, RestPageService>(Reuse.Scoped);
+            Container.Register<IContactsService, ContactsService>(Reuse.Scoped);
+            Container.Register<ILocalCachePageService, LocalCachePageService>(Reuse.Scoped);
+            Container.Register<ILocationPageService, LocationPageService>(Reuse.Scoped);
+            Container.Register<ICameraAndGalleryPageService, CameraAndGalleryPageService>(Reuse.Scoped);
         }
 
         public void Register<TService, TImplementation>() where TImplementation : TService
