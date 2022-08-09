@@ -16,10 +16,10 @@ namespace upendeo.Services.Test
     {
         private static readonly ILocationPageService service = GetService();
 
-        private static ILocationPageService GetService() => GetService(GetLocationServiceMock(), GetBasicAuthRestServiceMock());
+        private static ILocationPageService GetService() => GetService(GetLocationServiceMock(), GetRestServiceFactoryMock());
 
-        private static ILocationPageService GetService(ILocationService locationService, IBasicAuthRestService<ResultsResponse<Location>> basicAuthRestService) =>
-            new LocationPageService(locationService, basicAuthRestService);
+        private static ILocationPageService GetService(ILocationService locationService, IRestServiceFactory restServiceFactory) =>
+            new LocationPageService(locationService, restServiceFactory);
 
         private static ILocationService GetLocationServiceMock()
         {
@@ -32,33 +32,38 @@ namespace upendeo.Services.Test
             return locationServiceMock.Object;
         }
 
-        private static IBasicAuthRestService<ResultsResponse<Location>> GetBasicAuthRestServiceMock()
+        private static IRestServiceFactory GetRestServiceFactoryMock()
         {
-            Mock<IBasicAuthRestService<ResultsResponse<Location>>> basicAuthRestServiceMock = new();
+            Mock<IRestService> restServiceMock = new();
+            Mock<IRestServiceFactory> restServiceFactoryMock = new();
 
-            basicAuthRestServiceMock
-                .Setup(mock => mock.GetAsync(It.IsAny<Uri>(), It.IsAny<string>(), It.IsAny<string>()))
+            restServiceMock
+                .Setup(mock => mock.GetAsync<ResultsResponse<Location>>(It.IsAny<Uri>()))
                 .Returns(Task.FromResult(new ResultsResponse<Location> { Results = new List<Location> { new Location() }}));
 
-            return basicAuthRestServiceMock.Object;
+            restServiceFactoryMock
+                .Setup(mock => mock.GetBasicAuthRestService(It.IsAny<string>(), It.IsAny<string>()))
+                .Returns(restServiceMock.Object);
+
+            return restServiceFactoryMock.Object;
         }
 
         [Fact]
         public void InitServiceWithoutLocationServiceMock()
         {
-            static ILocationPageService func() { return new LocationPageService(null, GetBasicAuthRestServiceMock()); }
+            static ILocationPageService func() { return new LocationPageService(null, GetRestServiceFactoryMock()); }
 
             ArgumentNullException exception = Assert.Throws<ArgumentNullException>(func);
             Assert.Equal("locationService", exception.ParamName);
         }
 
         [Fact]
-        public void InitServiceWithoutBasicAuthRestServiceMock()
+        public void InitServiceWithoutRestServiceFactoryMock()
         {
             static ILocationPageService func() { return new LocationPageService(GetLocationServiceMock(), null); }
 
             ArgumentNullException exception = Assert.Throws<ArgumentNullException>(func);
-            Assert.Equal("basicAuthRestService", exception.ParamName);
+            Assert.Equal("restServiceFactory", exception.ParamName);
         }
 
         [Fact]
@@ -78,7 +83,7 @@ namespace upendeo.Services.Test
                 .Setup(mock => mock.GetLocationAsync())
                 .Returns(Task.FromResult<Xamarin.Essentials.Location>(null));
 
-            ILocationPageService locationPageService = GetService(locationServiceMock.Object, GetBasicAuthRestServiceMock());
+            ILocationPageService locationPageService = GetService(locationServiceMock.Object, GetRestServiceFactoryMock());
 
             Location location = await locationPageService.GetLocationAsync();
             Assert.Null(location);
@@ -87,13 +92,18 @@ namespace upendeo.Services.Test
         [Fact]
         public async Task GetLocationAsync_WhenBasicAuthRestServiceReturnsNull()
         {
-            Mock<IBasicAuthRestService<ResultsResponse<Location>>> basicAuthRestServiceMock = new();
+            Mock<IRestService> restServiceMock = new();
+            Mock<IRestServiceFactory> restServiceFactoryMock = new();
 
-            basicAuthRestServiceMock
-                .Setup(mock => mock.GetAsync(It.IsAny<Uri>(), It.IsAny<string>(), It.IsAny<string>()))
+            restServiceMock
+                .Setup(mock => mock.GetAsync<ResultsResponse<Location>>(It.IsAny<Uri>()))
                 .Returns(Task.FromResult<ResultsResponse<Location>>(null));
 
-            ILocationPageService locationPageService = GetService(GetLocationServiceMock(), basicAuthRestServiceMock.Object);
+            restServiceFactoryMock
+                .Setup(mock => mock.GetBasicAuthRestService(It.IsAny<string>(), It.IsAny<string>()))
+                .Returns(restServiceMock.Object);
+
+            ILocationPageService locationPageService = GetService(GetLocationServiceMock(), restServiceFactoryMock.Object);
 
             Location location = await locationPageService.GetLocationAsync();
             Assert.Null(location);

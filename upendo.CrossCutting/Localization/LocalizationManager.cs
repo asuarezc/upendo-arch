@@ -10,7 +10,7 @@ namespace upendo.CrossCutting.Localization
     {
         private IDictionary<string, string> currentStrings;
 
-        public AvailableLanguage? CurrentLanguage { get; private set; }
+        public AvailableLanguage CurrentLanguage { get; private set; }
 
         public event EventHandler CurrentLanguageChanged;
 
@@ -28,11 +28,11 @@ namespace upendo.CrossCutting.Localization
 
         public void SetLanguage(AvailableLanguage language)
         {
-            if (CurrentLanguage != null && CurrentLanguage.Value == language)
+            if (CurrentLanguage == language)
                 return;
 
             CurrentLanguage = language;
-            SetLanguageInternal(CurrentLanguage.Value);
+            SetLanguageInternal(CurrentLanguage);
         }
 
         private void SetLanguageInternal(AvailableLanguage language)

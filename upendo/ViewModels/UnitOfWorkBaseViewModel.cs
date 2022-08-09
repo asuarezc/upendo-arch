@@ -11,7 +11,7 @@ namespace upendo.ViewModels
 {
     public abstract class UnitOfWorkBaseViewModel : BaseModel
     {
-        private static readonly TimeSpan defaultTimeout = TimeSpan.FromSeconds(20);
+        private static readonly TimeSpan defaultTimeout = TimeSpan.FromSeconds(5);
 
         private bool isBusy = false;
         public bool IsBusy

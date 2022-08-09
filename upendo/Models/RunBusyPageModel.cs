@@ -12,5 +12,10 @@
                 NotifyPropertyChanged();
             }
         }
+
+        public RunBusyPageModel()
+        {
+            CurrentTimeoutSeconds = 5d;
+        }
     }
 }

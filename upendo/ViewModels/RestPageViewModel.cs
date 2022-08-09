@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Autofac;
 using DryIoc;
 using upendo.CrossCutting.Entities;
 using upendo.CrossCutting.Interfaces.Logic;

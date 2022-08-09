@@ -38,7 +38,7 @@ namespace upendeo.Services.Test
             static ILocalCachePageService func() { return new LocalCachePageService(null); }
 
             ArgumentNullException exception = Assert.Throws<ArgumentNullException>(func);
-            Assert.Equal("memoryCacheManager", exception.ParamName);
+            Assert.Equal("memoryCacheFactory", exception.ParamName);
         }
 
         [Fact]

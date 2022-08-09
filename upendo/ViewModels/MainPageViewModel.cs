@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
-using Autofac;
 using upendo.CrossCutting.Entities;
 using upendo.CrossCutting.Interfaces.Logic;
 using upendo.Models;
@@ -45,7 +44,7 @@ namespace upendo.ViewModels
         {
             ContentPage pageToNavigate = menuOption.NavigationPage switch
             {
-                AvaliablePageFromMenu.RunBusy => new CameraAndGalleryPage(),
+                AvaliablePageFromMenu.RunBusy => new RunBusyPage(),
                 AvaliablePageFromMenu.RestService => new RestPage(),
                 AvaliablePageFromMenu.LiteDB => new LocalDBPage(),
                 AvaliablePageFromMenu.LocalMemoryChache => new LocalCachePage(),

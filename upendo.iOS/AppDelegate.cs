@@ -30,7 +30,6 @@ namespace upendo.iOS
             global::Xamarin.Forms.Forms.Init();
 
             RegisterNativeTypes();
-            DependencyServiceManager.Instance.RegisterTypes();
             LoadApplication(new App());
 
             return base.FinishedLaunching(app, options);

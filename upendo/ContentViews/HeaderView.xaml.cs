@@ -10,7 +10,7 @@ namespace upendo.ContentViews
             typeof(string),
             typeof(HeaderView),
             string.Empty,
-            propertyChanged: TitleTextPropertyChanged
+            propertyChanged: TitleText_PropertyChanged
         );
 
         public static readonly BindableProperty IsBackButtonVisibleProperty = BindableProperty.Create(
@@ -18,7 +18,7 @@ namespace upendo.ContentViews
             typeof(bool),
             typeof(HeaderView),
             false,
-            propertyChanged: IsBackButtonVisiblePropertyChanged
+            propertyChanged: IsBackButtonVisible_PropertyChanged
         );
 
         public static readonly BindableProperty IsBackButtonEnabledPropery = BindableProperty.Create(
@@ -26,7 +26,7 @@ namespace upendo.ContentViews
             typeof(bool),
             typeof(HeaderView),
             false,
-            propertyChanged: IsBackButtonEnabledPropertyChanged
+            propertyChanged: IsBackButtonEnabled_PropertyChanged
         );
 
         public static readonly BindableProperty BackCommandProperty = BindableProperty.Create(
@@ -34,7 +34,7 @@ namespace upendo.ContentViews
             typeof(Command),
             typeof(HeaderView),
             null,
-            propertyChanged: BackCommandPropertyChanged
+            propertyChanged: BackCommand_PropertyChanged
         );
 
         public static readonly BindableProperty IsRightButtonVisibleProperty = BindableProperty.Create(
@@ -42,7 +42,7 @@ namespace upendo.ContentViews
             typeof(bool),
             typeof(HeaderView),
             false,
-            propertyChanged: IsRightButtonVisiblePropertyChanged
+            propertyChanged: IsRightButtonVisible_PropertyChanged
         );
 
         public static readonly BindableProperty IsRightButtonEnabledProperty = BindableProperty.Create(
@@ -50,7 +50,7 @@ namespace upendo.ContentViews
             typeof(bool),
             typeof(HeaderView),
             false,
-            propertyChanged: IsRightButtonEnabledPropertyChanged
+            propertyChanged: IsRightButtonEnabled_PropertyChanged
         );
 
         public static readonly BindableProperty RightCommandProperty = BindableProperty.Create(
@@ -58,7 +58,7 @@ namespace upendo.ContentViews
             typeof(Command),
             typeof(HeaderView),
             null,
-            propertyChanged: RightCommandPropertyChanged
+            propertyChanged: RightCommand_PropertyChanged
         );
 
         public static readonly BindableProperty RightButtonImageSourceProperty = BindableProperty.Create(
@@ -67,7 +67,7 @@ namespace upendo.ContentViews
             typeof(HeaderView),
             null,
             BindingMode.OneWay,
-            propertyChanged: RightButtonImageSourcePropertyChanged
+            propertyChanged: RightButtonImageSource_PropertyChanged
         );
 
         public string TitleText
@@ -125,19 +125,19 @@ namespace upendo.ContentViews
             InitializeRightButton();
         }
 
-        private static void TitleTextPropertyChanged(BindableObject bindableObject, object oldValue, object newValue)
+        private static void TitleText_PropertyChanged(BindableObject bindableObject, object oldValue, object newValue)
         {
             if (bindableObject != null && bindableObject is HeaderView headerView && headerView.titleLabel != null)
                 headerView.titleLabel.Text = newValue.ToString();
         }
 
-        private static void IsBackButtonVisiblePropertyChanged(BindableObject bindableObject, object oldValue, object newValue)
+        private static void IsBackButtonVisible_PropertyChanged(BindableObject bindableObject, object oldValue, object newValue)
         {
             if (bindableObject != null && bindableObject is HeaderView headerView && headerView.backImage != null)
                 headerView.backImage.IsVisible = (bool)newValue;
         }
 
-        private static void IsBackButtonEnabledPropertyChanged(BindableObject bindableObject, object oldValue, object newValue)
+        private static void IsBackButtonEnabled_PropertyChanged(BindableObject bindableObject, object oldValue, object newValue)
         {
             if (bindableObject != null && bindableObject is HeaderView headerView
                 && headerView.backImage != null && newValue != null && bool.TryParse(newValue.ToString(), out bool enabled))
@@ -146,7 +146,7 @@ namespace upendo.ContentViews
             } 
         }
 
-        private static void BackCommandPropertyChanged(BindableObject bindableObject, object oldValue, object newValue)
+        private static void BackCommand_PropertyChanged(BindableObject bindableObject, object oldValue, object newValue)
         {
             if (bindableObject == null || bindableObject is not HeaderView headerView
                 || headerView.backImage == null || headerView.backImage.GestureRecognizers == null)
@@ -168,13 +168,13 @@ namespace upendo.ContentViews
             }
         }
 
-        private static void IsRightButtonVisiblePropertyChanged(BindableObject bindableObject, object oldValue, object newValue)
+        private static void IsRightButtonVisible_PropertyChanged(BindableObject bindableObject, object oldValue, object newValue)
         {
             if (bindableObject != null && bindableObject is HeaderView headerView && headerView.rightImage != null)
                 headerView.rightImage.IsVisible = (bool)newValue;
         }
 
-        private static void IsRightButtonEnabledPropertyChanged(BindableObject bindableObject, object oldValue, object newValue)
+        private static void IsRightButtonEnabled_PropertyChanged(BindableObject bindableObject, object oldValue, object newValue)
         {
             if (bindableObject != null && bindableObject is HeaderView headerView
                 && headerView.rightImage != null && newValue != null && bool.TryParse(newValue.ToString(), out bool enabled))
@@ -183,7 +183,7 @@ namespace upendo.ContentViews
             }
         }
 
-        private static void RightCommandPropertyChanged(BindableObject bindableObject, object oldValue, object newValue)
+        private static void RightCommand_PropertyChanged(BindableObject bindableObject, object oldValue, object newValue)
         {
             if (bindableObject == null || bindableObject is not HeaderView headerView
                 || headerView.rightImage == null || headerView.rightImage.GestureRecognizers == null)
@@ -205,7 +205,7 @@ namespace upendo.ContentViews
             }
         }
 
-        private static void RightButtonImageSourcePropertyChanged(BindableObject bindableObject, object oldValue, object newValue)
+        private static void RightButtonImageSource_PropertyChanged(BindableObject bindableObject, object oldValue, object newValue)
         {
             if (bindableObject != null && bindableObject is HeaderView headerView && headerView.rightImage != null)
                 headerView.rightImage.Source = (ImageSource)newValue;

@@ -40,7 +40,8 @@ namespace upendo.ContentViews
             typeof(double),
             typeof(AmountSlider),
             5d,
-            BindingMode.OneWayToSource
+            BindingMode.TwoWay,
+            propertyChanged: CurrentValuePropertyChanged
         );
 
         public static readonly BindableProperty SteppedProperty = BindableProperty.Create(
@@ -93,7 +94,11 @@ namespace upendo.ContentViews
             set => SetValue(StepValueProperty, value);
         }
 
-        public double CurrentValue => (double)GetValue(CurrentValueProperty);
+        public double CurrentValue
+        {
+            get => (double)GetValue(CurrentValueProperty);
+            set => SetValue(CurrentValueProperty, value);
+        }
 
         public AmountSlider()
         {
@@ -147,6 +152,19 @@ namespace upendo.ContentViews
             amountSlider.slider.Maximum = newDoubleValue;
         }
 
+        private static void CurrentValuePropertyChanged(BindableObject bindableObject, object oldValue, object newValue)
+        {
+            if (bindableObject != null && bindableObject is AmountSlider amountSlider
+                && amountSlider.currentValueLabel != null
+                && amountSlider.slider != null
+                && newValue != null
+                && newValue is double newCurrentValue)
+            {
+                amountSlider.slider.Value = newCurrentValue;
+                amountSlider.currentValueLabel.Text = newCurrentValue.ToString();
+            }
+        }
+
         private void LifecycleEffect_Loaded(object sender, EventArgs e)
         {
             slider.ValueChanged += Slider_ValueChanged;
@@ -181,12 +199,12 @@ namespace upendo.ContentViews
                 slider.Value = newStep;
                 slider.ValueChanged += Slider_ValueChanged;
 
-                SetValue(CurrentValueProperty, newStep);
+                CurrentValue = newStep;
                 currentValueLabel.Text = newStep.ToString();
             }
             else
             {
-                SetValue(CurrentValueProperty, e.NewValue);
+                CurrentValue = e.NewValue;
                 currentValueLabel.Text = e.NewValue.ToString();
             }
         }

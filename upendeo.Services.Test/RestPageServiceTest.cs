@@ -13,17 +13,22 @@ namespace upendeo.Services.Test
 {
     public class RestPageServiceTest
     {
-        private static readonly IRestPageService service = new RestPageService(GetBasicAuthRestServiceMock());
+        private static readonly IRestPageService service = new RestPageService(GetRestServiceFactoryMock());
 
-        private static IBasicAuthRestService<RestResponse<IEnumerable<User>>> GetBasicAuthRestServiceMock()
+        private static IRestServiceFactory GetRestServiceFactoryMock()
         {
-            Mock<IBasicAuthRestService<RestResponse<IEnumerable<User>>>> basicAuthRestServiceMock = new();
+            Mock<IRestService> restServiceMock = new();
+            Mock<IRestServiceFactory> restServiceFactoryMock = new();
 
-            basicAuthRestServiceMock
-                .Setup(mock => mock.GetAsync(It.IsAny<Uri>(), It.IsAny<string>(), It.IsAny<string>()))
+            restServiceMock
+                .Setup(mock => mock.GetAsync<RestResponse<IEnumerable<User>>>(It.IsAny<Uri>()))
                 .Returns(Task.FromResult(new RestResponse<IEnumerable<User>> { Data = new List<User> { new User() } }));
 
-            return basicAuthRestServiceMock.Object;
+            restServiceFactoryMock
+                .Setup(mock => mock.GetBasicAuthRestService(It.IsAny<string>(), It.IsAny<string>()))
+                .Returns(restServiceMock.Object);
+
+            return restServiceFactoryMock.Object;
         }
 
         [Fact]
@@ -32,7 +37,7 @@ namespace upendeo.Services.Test
             static IRestPageService func() { return new RestPageService(null); }
 
             ArgumentNullException exception = Assert.Throws<ArgumentNullException>(func);
-            Assert.Equal("restService", exception.ParamName);
+            Assert.Equal("restServiceFactory", exception.ParamName);
         }
 
         [Fact]
@@ -47,13 +52,18 @@ namespace upendeo.Services.Test
         [Fact]
         public async Task GetUsersAsync_WhenBasicAuthRestServiceReturnsNull()
         {
-            Mock<IBasicAuthRestService<RestResponse<IEnumerable<User>>>> basicAuthRestServiceMock = new();
+            Mock<IRestService> restServiceMock = new();
+            Mock<IRestServiceFactory> restServiceFactoryMock = new();
 
-            basicAuthRestServiceMock
-                .Setup(mock => mock.GetAsync(It.IsAny<Uri>(), It.IsAny<string>(), It.IsAny<string>()))
+            restServiceMock
+                .Setup(mock => mock.GetAsync<RestResponse<IEnumerable<User>>>(It.IsAny<Uri>()))
                 .Returns(Task.FromResult<RestResponse<IEnumerable<User>>>(null));
 
-            IRestPageService restPageService = new RestPageService(basicAuthRestServiceMock.Object);
+            restServiceFactoryMock
+                .Setup(mock => mock.GetBasicAuthRestService(It.IsAny<string>(), It.IsAny<string>()))
+                .Returns(restServiceMock.Object);
+
+            IRestPageService restPageService = new RestPageService(restServiceFactoryMock.Object);
 
             IEnumerable<User> users = await restPageService.GetUsersAsync();
 
