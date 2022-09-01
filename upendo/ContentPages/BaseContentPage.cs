@@ -84,7 +84,7 @@ namespace upendo.ContentPages
 
             Task.Run(async () =>
             {
-                ViewModel.Model = await ViewModel.GetInitialModelAsync();
+                ViewModel.Model = await ViewModel.InitializeModel();
             });
         }
 

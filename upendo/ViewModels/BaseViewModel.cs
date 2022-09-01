@@ -60,14 +60,14 @@ namespace upendo.ViewModels
             }
         }
 
-        public virtual async Task<TModel> GetInitialModelAsync()
+        public virtual async Task<TModel> InitializeModel()
         {
             return await Task.Run(() => { return new TModel(); });
         }
 
         public async Task ReloadModelAsync()
         {
-            Model = await GetInitialModelAsync();
+            Model = await InitializeModel();
         }
 
         protected override void Dispose(bool disposing)

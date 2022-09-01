@@ -26,7 +26,7 @@ namespace upendo.ViewModels
             () => IsNotBusy
         );
 
-        public override async Task<LocalCachePageModel> GetInitialModelAsync()
+        public override async Task<LocalCachePageModel> InitializeModel()
         {
             LocalCachePageModel model = new() { CurrentExpirationSeconds = 5 };
 

@@ -10,7 +10,7 @@ namespace upendo.ViewModels
     {
         public override string Title => GetResource(StringKey.menu_settings);
 
-        public override async Task<SettingsModel> GetInitialModelAsync()
+        public override async Task<SettingsModel> InitializeModel()
         {
             return await Task.Run(
                 () =>

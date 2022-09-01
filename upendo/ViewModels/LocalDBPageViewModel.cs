@@ -20,7 +20,7 @@ namespace upendo.ViewModels
             () => IsNotBusy
         );
 
-        public override async Task<LocalDBPageModel> GetInitialModelAsync()
+        public override async Task<LocalDBPageModel> InitializeModel()
         {
             LocalDBPageModel model = new();
 

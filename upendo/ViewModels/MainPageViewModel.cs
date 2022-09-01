@@ -18,7 +18,7 @@ namespace upendo.ViewModels
     {
         public override string Title => GetResource(StringKey.app_name);
 
-        public override async Task<MainPageModel> GetInitialModelAsync()
+        public override async Task<MainPageModel> InitializeModel()
         {
             MainPageModel model = new();
 
